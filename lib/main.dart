@@ -1,4 +1,4 @@
-import 'package:custom_drop_down/custom_drop_down/custom_drop_down.dart';
+import 'package:custom_drop_down/screens/custom_drop_down/custom_drop_down.dart';
 import 'package:flutter/material.dart';
 
 void main() {
