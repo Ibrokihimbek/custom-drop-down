@@ -9,7 +9,25 @@ class CustomDropDownPage extends StatefulWidget {
   State<CustomDropDownPage> createState() => _CustomDropDownPageState();
 }
 
-class _CustomDropDownPageState extends State<CustomDropDownPage> {
+class _CustomDropDownPageState extends State<CustomDropDownPage>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300), // Set your desired duration
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -18,7 +36,14 @@ class _CustomDropDownPageState extends State<CustomDropDownPage> {
         appBar: AppBar(
           title: const Text('Custom Drop Dwon'),
         ),
-        body: BlocBuilder<DropDownBloc, DropDownState>(
+        body: BlocConsumer<DropDownBloc, DropDownState>(
+          listener: (context, state) {
+            if (state.isRememberMe) {
+              _animationController.forward();
+            } else {
+              _animationController.reverse();
+            }
+          },
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.all(16),
@@ -35,12 +60,13 @@ class _CustomDropDownPageState extends State<CustomDropDownPage> {
                       const SizedBox(height: 12),
                       const Text('INTER NATION SCHOOL С1'),
                       const SizedBox(height: 24),
-                      Visibility(
-                        visible: state.isRememberMe,
-                        child: SizedBox(
+                      SizeTransition(
+                        sizeFactor: _animationController,
+                        axisAlignment: -1.0,
+                        child: const SizedBox(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text('INTER NATION SCHOOL С1'),
                               SizedBox(height: 12),
                               Text('INTER NATION SCHOOL С1'),

@@ -8,7 +8,7 @@ class DropDownState extends Equatable {
     bool? isRememberMe,
   }) {
     return DropDownState(
-      isRememberMe: isRememberMe ?? this.isRememberMe,
+      isRememberMe: isRememberMe ?? false,
     );
   }
 
